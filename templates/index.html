@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Socket.IO </title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -12,10 +12,30 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        var data = {};
+        $('form').submit((e) => {
+          e.preventDefault();
+          socket.emit("Client:", $("#m").val());
+          socket.on('DataEmit', (msg) => {
+            $("#p").val(msg.message);
+          })
+          
+          return false;
+        });
+      });
+      // var socket = io();
+      // socket.emit("Client:", {data: "Hleoo"});
+    </script>
   </head>
   <body>
     <ul id="messages"></ul>
     <form action="">
+      <p id="p"></p>
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </body>
